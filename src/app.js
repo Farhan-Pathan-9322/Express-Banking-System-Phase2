@@ -1,22 +1,17 @@
-// Import required modules
 const express = require('express');
 const bodyParser = require('body-parser');
 
-// Initialize the express application
 const app = express();
-app.use(bodyParser.json()); // Enable body-parser to parse JSON data
+app.use(bodyParser.json()); 
 
 const port = 3000;
 
-// In-memory data structure to store accounts and transactions
 let accounts = [];
 let accountCounter = 1;
 
-// Helper functions
 const generateAccountId = () => (accountCounter++).toString();
 const findAccount = (accountId) => accounts.find(account => account.accountId === accountId);
 
-// Routes
 
 // Create an account
 app.post('/create-account', (req, res) => {
@@ -69,11 +64,10 @@ app.post('/transfer', (req, res) => {
         return res.status(400).json({ error: 'Insufficient balance in the sender account' });
     }
 
-    // Deduct from sender and add to receiver
     fromAccount.balance -= amount;
     toAccount.balance += amount;
 
-    // Record transactions
+    
     const date = new Date();
     fromAccount.transactions.push({ type: 'Debit', amount, to: toAccountId, date });
     toAccount.transactions.push({ type: 'Credit', amount, from: fromAccountId, date });
@@ -93,7 +87,6 @@ app.get('/account/:accountId/transactions', (req, res) => {
     res.status(200).json({ accountId, transactions: account.transactions });
 });
 
-// Start the server
 app.listen(port, () => {
     console.log(`Banking application server is running on port ${port}`);
 });
