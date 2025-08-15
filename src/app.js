@@ -1,4 +1,5 @@
 const express = require('express');
+
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -90,3 +91,4 @@ app.get('/account/:accountId/transactions', (req, res) => {
 app.listen(port, () => {
     console.log(`Banking application server is running on port ${port}`);
 });
+
